@@ -1,0 +1,16 @@
+# Environment
+.env
+
+# Resume (personal data)
+Resume.pdf
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+# OS
+.DS_Store

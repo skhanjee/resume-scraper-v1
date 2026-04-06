@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResumeMatch v1.0</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="logo-icon">&#9650;</span>
+        <span class="logo-text">ResumeMatch v1.0</span>
+      </div>
+
+      <!-- Resume Upload -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-label">Resume</h3>
+        <div id="resume-zone" class="resume-zone" onclick="document.getElementById('file-input').click()">
+          <div id="resume-icon" class="resume-icon">&#8679;</div>
+          <div id="resume-status-text">Drop or click to upload</div>
+          <div class="resume-hint">PDF only &mdash; click to replace</div>
+          <input type="file" id="file-input" accept=".pdf" style="display:none" onchange="uploadResume(event)" />
+        </div>
+        <div id="resume-info" class="resume-info hidden"></div>
+      </div>
+
+      <!-- Preferences -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-label">Job Preferences</h3>
+
+        <div class="pref-group">
+          <label class="pref-label">Job Keywords</label>
+          <div id="keyword-tags" class="keyword-tags"></div>
+          <div class="keyword-input-row">
+            <input id="keyword-input" class="pref-input" type="text" placeholder="Add keyword + Enter" onkeydown="handleKeywordInput(event)" />
+          </div>
+        </div>
+
+        <div class="pref-group">
+          <label class="pref-label">Locations</label>
+          <div id="location-tags" class="keyword-tags"></div>
+          <div class="keyword-input-row">
+            <input id="location-input" class="pref-input" type="text" placeholder="Add city + Enter" onkeydown="handleLocationInput(event)" />
+          </div>
+        </div>
+
+        <div class="pref-group">
+          <label class="pref-label">Work Style</label>
+          <div class="wfh-toggle">
+            <button class="wfh-btn active" data-value="any" onclick="setRemote(this)">Any</button>
+            <button class="wfh-btn" data-value="remote" onclick="setRemote(this)">Remote</button>
+            <button class="wfh-btn" data-value="hybrid" onclick="setRemote(this)">Hybrid</button>
+            <button class="wfh-btn" data-value="onsite" onclick="setRemote(this)">On-site</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scan -->
+      <div class="sidebar-section">
+        <button id="scan-btn" class="scan-btn" onclick="startScan()">Scan Jobs</button>
+        <div id="scan-status" class="scan-status hidden">
+          <div class="progress-bar-track">
+            <div id="progress-bar" class="progress-bar-fill"></div>
+          </div>
+          <div id="scan-message" class="scan-message"></div>
+        </div>
+      </div>
+
+      <!-- Companies -->
+      <div id="companies-section" class="sidebar-section hidden">
+        <h3 class="sidebar-label">Filter by Company</h3>
+        <ul id="company-list" class="company-list"></ul>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 class="page-title">Matched Roles</h1>
+          <p class="page-subtitle">Ranked by match score &amp; interview likelihood</p>
+        </div>
+        <div class="topbar-right">
+          <div id="results-count" class="results-count hidden"></div>
+          <div class="sort-row">
+            <label class="sort-label">Sort by</label>
+            <select id="sort-select" class="sort-select" onchange="renderJobs()">
+              <option value="match_score">Match Score</option>
+              <option value="interview_likelihood_pct">Interview Likelihood</option>
+              <option value="company">Company</option>
+            </select>
+          </div>
+        </div>
+      </header>
+
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">&#128269;</div>
+        <h2>Ready to find your next role</h2>
+        <p>Upload your resume, set your preferences, and click <strong>Scan Jobs</strong>.</p>
+      </div>
+
+      <div id="jobs-grid" class="jobs-grid hidden"></div>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
